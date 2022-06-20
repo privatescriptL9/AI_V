@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  email          String   @unique
+  avatar_url     String?
+  username       String
+  role           Role?    @default(USER)
+  hash           String
+  isActivated    Boolean? @default(false)
+  activationLink String   @unique
+  favorites      Int[]
+
+  @@map("users")
+}
+
+model Dataset {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  name String
+  description String
+  size String
+  filesAmount Int
+  archiveLink String
+  preview_image String?
+
+  @@map("datasets")
+}
