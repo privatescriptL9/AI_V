@@ -71,28 +71,4 @@ export default class Store {
       return false
     }
   }
-
-  async addToFavorite(datasetId: number) {
-    try {
-      this.setLoading(true)
-      const response = await DatasetService.addToFavorite(datasetId)
-      this.setLoading(false)
-      this.user.favorites = [...this.user.favorites, datasetId]
-    } catch (error: any) {
-      return error?.response?.data?.message
-    }
-  }
-
-  async removeFromFavorite(datasetId: number) {
-    try {
-      this.setLoading(true)
-      const response = await DatasetService.removeFromFavorite(datasetId)
-      this.setLoading(false)
-      this.user.favorites = this.user.favorites.filter(
-        (item: any) => item.id === datasetId
-      )
-    } catch (error: any) {
-      return error?.response?.data?.message
-    }
-  }
 }

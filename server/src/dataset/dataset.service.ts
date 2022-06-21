@@ -57,4 +57,24 @@ export class DatasetService {
       throw new BadRequestException('Еще не добавлен')
     }
   }
+
+  async getAllFavorites(userId) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: userId
+      }
+    })
+
+    if (!user) throw new BadRequestException('Такого пользователя не существует')
+
+    const favoriteIds = user.favorites
+
+    const favorites = await this.prismaService.dataset.findMany({
+      where: {
+        id: { in: favoriteIds }
+      }
+    })
+
+    return favorites
+  }
 }

@@ -44,6 +44,10 @@ function Register() {
           {
             required: true,
             message: 'Пожалуйста введите свое имя пользователя'
+          },
+          {
+            min: 6,
+            message: 'Минимум 6 символов'
           }
         ]}
       >
@@ -63,7 +67,13 @@ function Register() {
         label="Пароль"
         name="password"
         hasFeedback
-        rules={[{ required: true, message: 'Пожалуйста введите свой пароль' }]}
+        rules={[
+          { required: true, message: 'Пожалуйста введите свой пароль' },
+          {
+            min: 6,
+            message: 'Минимум 6 символов'
+          }
+        ]}
       >
         <Input.Password />
       </Form.Item>

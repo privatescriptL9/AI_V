@@ -9,11 +9,15 @@ import { useContext, useEffect } from 'react'
 function Favorites() {
   const { datasetStore } = useContext(Context)
 
+  useEffect(() => {
+    datasetStore.getAllFavorites()
+  }, [])
+
   return (
     <Container>
-      {datasetStore.favorites.length ? (
+      {datasetStore?.favorites?.length ? (
         <DatasetCardsContainer>
-          {datasetStore.favorites.map((dataset: any) => (
+          {datasetStore?.favorites?.map((dataset: any) => (
             <DatasetCard key={dataset.id} {...dataset} />
           ))}
         </DatasetCardsContainer>

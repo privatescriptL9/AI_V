@@ -43,8 +43,9 @@ function DatasetCard({
   const [isFavorite, setFavotire] = useState(false)
 
   useEffect(() => {
-    const dataset = datasetStore.favorites.filter((item: any) => item.id === id)
-    if (dataset.length) {
+    const favoriteIds = datasetStore.favorites.map((item: any) => item.id)
+
+    if (favoriteIds.includes(id)) {
       setFavotire(true)
     }
   }, [])

@@ -45,7 +45,13 @@ function Login() {
         label="Пароль"
         name="password"
         hasFeedback
-        rules={[{ required: true, message: 'Пожалуйста введите свой пароль' }]}
+        rules={[
+          { required: true, message: 'Пожалуйста введите свой пароль' },
+          {
+            min: 6,
+            message: 'Минимум 6 символов'
+          }
+        ]}
       >
         <Input.Password />
       </Form.Item>

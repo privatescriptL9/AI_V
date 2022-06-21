@@ -2,16 +2,8 @@ import { observer } from 'mobx-react-lite'
 import { Container, EmptyContainer } from './styles'
 import DatasetCard from '../DatasetCard/DatasetCard'
 import { Empty } from 'antd'
-import { Context } from '../../main'
-import { useContext, useEffect } from 'react'
 
 function DatasetCards({ data }: any) {
-  const { datasetStore, store } = useContext(Context)
-
-  useEffect(() => {
-    datasetStore.setFavorites(store.user.favorites)
-  }, [])
-
   return (
     <Container>
       {data?.length ? (

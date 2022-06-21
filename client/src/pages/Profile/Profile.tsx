@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Avatar, Button, Upload, UploadProps, notification } from 'antd'
 import { Context } from '../../main'
 import {
@@ -22,7 +22,11 @@ export function toLocaleDateString(date: Date) {
 }
 
 function Profile() {
-  const { store } = useContext(Context)
+  const { store, datasetStore } = useContext(Context)
+
+  useEffect(() => {
+    datasetStore.getAllFavorites()
+  }, [])
 
   const props: UploadProps = {
     name: 'file',

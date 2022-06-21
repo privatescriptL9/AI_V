@@ -3,8 +3,8 @@ import DatasetService from '../services/DatasetService'
 
 export default class DatasetStore {
   datasets = [] as any
-  favorites = [] as any
   isLoading = false
+  favorites = [] as any
 
   constructor() {
     makeAutoObservable(this)
@@ -44,8 +44,6 @@ export default class DatasetStore {
       this.setLoading(true)
       const response = await DatasetService.addToFavorite(datasetId)
       this.setLoading(false)
-      const dataset = this.datasets.filter((item: any) => item.id === datasetId)
-      this.favorites = [...this.favorites, dataset]
     } catch (error: any) {
       return error?.response?.data?.message
     }
@@ -56,10 +54,20 @@ export default class DatasetStore {
       this.setLoading(true)
       const response = await DatasetService.removeFromFavorite(datasetId)
       this.setLoading(false)
-
-      this.favorites = this.favorites.filter(
-        (item: any) => item.id === datasetId
+      this.setFavorites(
+        this.favorites.filter((item: any) => item.id !== datasetId)
       )
+    } catch (error: any) {
+      return error?.response?.data?.message
+    }
+  }
+
+  async getAllFavorites() {
+    try {
+      this.setLoading(true)
+      const response = await DatasetService.getAllFavorites()
+      this.setLoading(false)
+      this.setFavorites(response.data)
     } catch (error: any) {
       return error?.response?.data?.message
     }

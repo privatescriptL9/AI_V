@@ -110,15 +110,6 @@ export class AuthService {
       }
     })
 
-    const datasets = await this.prisma.dataset.findMany({
-      where: {
-        id: { in: currentUser.favorites }
-      }
-    })
-
-    return {
-      ...currentUser,
-      favorites: datasets
-    }
+    return currentUser
   }
 }

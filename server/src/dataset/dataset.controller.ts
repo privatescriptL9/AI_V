@@ -21,4 +21,9 @@ export class DatasetController {
   removeFromFavorite(@Body('datasetId') datasetId: number, @GetCurrentUser() user) {
     return this.datasetService.removeFromFavorite(datasetId, user.sub)
   }
+
+  @Get('favorites')
+  getAllFavorites(@GetCurrentUser() user) {
+    return this.datasetService.getAllFavorites(user.sub)
+  }
 }
