@@ -13,6 +13,8 @@ import Register from './pages/Register/Register'
 import Loading from './components/Loading/Loading'
 import Dataset from './pages/Dataset/Dataset'
 import Settings from './pages/Settings/Settings'
+import Users from './pages/Users/Users'
+import Datasets from './pages/Datasets/Datasets'
 
 function App(): ReactElement | null {
   const { store } = useContext(Context)
@@ -32,14 +34,18 @@ function App(): ReactElement | null {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
           {store.user.role === 'ADMIN' ? (
-            <Route path="admin" element={<AdminPanel />} />
+            <>
+              <Route path="admin" element={<AdminPanel />} />
+              <Route path="users" element={<Users />} />
+              <Route path="datasets" element={<Datasets />} />
+            </>
           ) : (
             <>
               <Route path="data" element={<DataStore />} />
               <Route path="data/:id" element={<Dataset />} />
               <Route path="favorites" element={<Favorites />} />
-              <Route path="settings" element={<Settings />} />
             </>
           )}
         </Route>

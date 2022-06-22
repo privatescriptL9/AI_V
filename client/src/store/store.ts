@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { IUser } from '../models/IUser'
 import AuthService from '../services/AuthService'
 import DatasetService from '../services/DatasetService'
+import UserService from '../services/UserService'
 
 export default class Store {
   user = {} as IUser
@@ -69,6 +70,18 @@ export default class Store {
     } catch (error: any) {
       this.setLoading(false)
       return false
+    }
+  }
+
+  async updateInfo(username: string, password: string) {
+    try {
+      this.setLoading(true)
+      const response = await UserService.updateInfo(username, password)
+      this.setLoading(false)
+      this.setUser(response.data)
+    } catch (error: any) {
+      this.setLoading(false)
+      return error?.response?.data?.message
     }
   }
 }

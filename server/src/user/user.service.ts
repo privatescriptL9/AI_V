@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
+import * as bcrypt from 'bcrypt'
 import * as fs from 'fs'
 import { PrismaService } from 'src/prisma/prisma.service'
 
@@ -11,6 +12,10 @@ export class UserService {
   }
 
   async changeAvatar(user: any, file: any) {
+    if (!['image/jpeg', 'image/png'].includes(file.mimetype)) {
+      throw new BadRequestException('Файл не верного формата')
+    }
+
     const currentUser = await this.prismaService.user.findUnique({
       where: {
         email: user.email
@@ -44,5 +49,27 @@ export class UserService {
         avatar_url: `${process.env.API_URL}/${filename}`
       }
     })
+  }
+
+  async updateInfo(user: any, updateInfo: any) {
+    const currentUser = await this.prismaService.user.findUnique({ where: { id: user.sub } })
+    const { username, password } = updateInfo
+    let hash
+
+    if (password) {
+      hash = await bcrypt.hash(password, 10)
+    }
+
+    await this.prismaService.user.update({
+      where: {
+        id: currentUser.id
+      },
+      data: {
+        username: username ? username : currentUser.username,
+        hash: password ? hash : currentUser.hash
+      }
+    })
+
+    return currentUser
   }
 }

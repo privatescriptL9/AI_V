@@ -44,9 +44,6 @@ function Profile() {
           message: 'Успех',
           description: `${info.file.name} успешно загружен`
         })
-
-        await store.checkAuth()
-        location.reload()
       } else {
         notification['error']({
           message: 'Ошибка загрузки',

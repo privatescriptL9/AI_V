@@ -6,7 +6,9 @@ import {
   UserOutlined,
   ToolOutlined,
   DatabaseOutlined,
-  BookOutlined
+  BookOutlined,
+  SlidersOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Container, Header, Logo, LeftBlock, Username } from './styles'
@@ -24,31 +26,37 @@ function AppLayout() {
     store.user.role === 'ADMIN'
       ? [
           {
-            key: '2',
+            key: '3',
             icon: <ToolOutlined />,
             label: 'Админ',
             onClick: () => navigate('/admin')
+          },
+          {
+            key: '4',
+            icon: <TeamOutlined />,
+            label: 'Пользователи',
+            onClick: () => navigate('/users')
+          },
+          {
+            key: '5',
+            icon: <DatabaseOutlined />,
+            label: 'Наборы данных',
+            onClick: () => navigate('/datasets')
           }
         ]
       : [
           {
-            key: '2',
+            key: '3',
             icon: <DatabaseOutlined />,
             label: 'Хранилище данных',
             onClick: () => navigate('/data')
           },
           {
-            key: '3',
+            key: '4',
             icon: <BookOutlined />,
             label: 'Избранное',
             onClick: () => navigate('/favorites')
           }
-          // {
-          //   key: '4',
-          //   icon: <SlidersOutlined />,
-          //   label: 'Настройки',
-          //   onClick: () => navigate('/settings')
-          // }
         ]
 
   const handleLogout = () => {
@@ -71,6 +79,12 @@ function AppLayout() {
                 icon: <UserOutlined />,
                 label: 'Профиль',
                 onClick: () => navigate('/')
+              },
+              {
+                key: '2',
+                icon: <SlidersOutlined />,
+                label: 'Настройки',
+                onClick: () => navigate('/settings')
               },
               ...navLinks
             ]}
