@@ -60,7 +60,7 @@ function Login() {
         <Button type="primary" htmlType="submit">
           Войти
         </Button>
-        <Button type="link" onClick={() => navigate('/auth/register')}>
+        <Button type="link" onClick={() => navigate('/register')}>
           Регистрация
         </Button>
       </Form.Item>
