@@ -25,8 +25,11 @@ function AdminPanel() {
       authorization: `Bearer ${localStorage.getItem('token')}`
     },
     onChange(info) {
-      const accessFileTypes = ['application/zip']
-      console.log(info)
+      const accessFileTypes = [
+        'application/zip',
+        'application/x-zip-compressed'
+      ]
+
       if (!accessFileTypes.includes(String(info.file.type))) {
         notification['error']({
           message: 'Ошибка загрузки',

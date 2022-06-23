@@ -16,7 +16,7 @@ export class DatasetService {
   }
 
   async uploadArchive(file: any) {
-    if (!['application/zip'].includes(file.mimetype)) {
+    if (!['application/zip', 'application/x-zip-compressed'].includes(file.mimetype)) {
       throw new BadRequestException('Файл неверного формата')
     }
 
