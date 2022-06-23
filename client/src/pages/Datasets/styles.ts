@@ -8,3 +8,8 @@ export const CutText = styled.div`
   text-overflow: ellipsis;
   white-space: pre;
 `
+
+export const Title = styled.div`
+  font-size: 2rem;
+  margin: 0 0 3rem 3rem;
+`

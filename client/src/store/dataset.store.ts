@@ -93,4 +93,14 @@ export default class DatasetStore {
       return error?.response?.data?.message
     }
   }
+
+  async addDownload(datasetId: number) {
+    try {
+      this.setLoading(true)
+      const response = await DatasetService.addDownload(datasetId)
+      this.setLoading(false)
+    } catch (error: any) {
+      return error?.response?.data?.message
+    }
+  }
 }

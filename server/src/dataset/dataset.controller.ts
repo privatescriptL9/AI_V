@@ -38,4 +38,9 @@ export class DatasetController {
   getAllFavorites(@GetCurrentUser() user) {
     return this.datasetService.getAllFavorites(user.sub)
   }
+
+  @Post('addDownload')
+  addDownload(@Body('datasetId') datasetId) {
+    return this.datasetService.addDownload(datasetId)
+  }
 }

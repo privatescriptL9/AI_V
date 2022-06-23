@@ -130,4 +130,21 @@ export class DatasetService {
 
     return favorites
   }
+
+  async addDownload(datasetId: number) {
+    const dataset = await this.prismaService.dataset.findUnique({
+      where: {
+        id: datasetId
+      }
+    })
+
+    return await this.prismaService.dataset.update({
+      where: {
+        id: dataset.id
+      },
+      data: {
+        downloads: Number(dataset.downloads) + 1
+      }
+    })
+  }
 }

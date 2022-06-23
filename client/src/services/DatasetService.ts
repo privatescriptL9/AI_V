@@ -30,4 +30,10 @@ export default class DatasetService {
       archive
     })
   }
+
+  static async addDownload(datasetId: number) {
+    return $api.post('/dataset/addDownload', {
+      datasetId
+    })
+  }
 }

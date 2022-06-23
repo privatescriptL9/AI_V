@@ -40,6 +40,18 @@ model Dataset {
   filesAmount Int
   archiveLink String
   preview_image String?
+  downloads Int @default(0)
 
   @@map("datasets")
+}
+
+model Comment {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  userId String
+  text String
+
+  @@map("comments")
 }

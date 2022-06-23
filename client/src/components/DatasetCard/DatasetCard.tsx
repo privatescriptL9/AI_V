@@ -26,6 +26,7 @@ interface IDatasetCard {
   filesAmount: number
   archiveLink: string
   preview_image: string
+  downloads: number
 }
 
 function DatasetCard({
@@ -37,7 +38,8 @@ function DatasetCard({
   size,
   filesAmount,
   archiveLink,
-  preview_image
+  preview_image,
+  downloads
 }: IDatasetCard) {
   const navigate = useNavigate()
   const { datasetStore } = useContext(Context)
@@ -82,6 +84,7 @@ function DatasetCard({
           key: '2',
           icon: <DownloadOutlined />,
           onClick() {
+            datasetStore.addDownload(id)
             location.href = archiveLink
           }
         }
@@ -98,8 +101,9 @@ function DatasetCard({
       <ImgPreview src={preview_image || defaultPhoto} alt="dataset_preview" />
       <Name>{name}</Name>
       <Dropdown overlay={menu} />
-      <Size>Размер архива {size}</Size>
-      <Date>Добавлен {toLocaleDateString(createdAt)}</Date>
+      <Size>Размер архива: {size}</Size>
+      <Date>Добавлен: {toLocaleDateString(createdAt)}</Date>
+      <Date>Скачиваний: {downloads}</Date>
       <DetailsButton onClick={handleDatasetClick}>
         Перейти на страницу
       </DetailsButton>
