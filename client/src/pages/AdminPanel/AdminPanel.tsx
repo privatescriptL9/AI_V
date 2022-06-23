@@ -1,37 +1,52 @@
-import { Button, Form, Input, Upload, UploadProps } from 'antd'
+import { Button, Form, Input, Upload, UploadProps, notification } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { Container, SubTitle, Title } from './styles'
 import { InboxOutlined } from '@ant-design/icons'
+import { Context } from '../../main'
+import { useContext } from 'react'
+import { API_URL } from '../../http'
 
 const { Dragger } = Upload
 
-const props: UploadProps = {
-  name: 'file',
-  multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  onChange(info) {
-    const { status } = info.file
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList)
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`)
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`)
-    }
-  },
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files)
-  }
+const dummyRequest = ({}) => {
+  setTimeout(() => {}, 0)
 }
 
 function AdminPanel() {
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+  const [form] = Form.useForm()
+  const { datasetStore } = useContext(Context)
+
+  const props: UploadProps = {
+    name: 'file',
+    multiple: false,
+    maxCount: 1,
+    action: `${API_URL}/dataset/uploadArchive`,
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    onChange(info) {
+      const accessFileTypes = ['application/zip']
+
+      if (!accessFileTypes.includes(String(info.file.type))) {
+        notification['error']({
+          message: 'Ошибка загрузки',
+          description: 'Файл не подходящего формата'
+        })
+        form.resetFields()
+        return false
+      }
+    },
+    onDrop(e) {}
   }
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
+  const onFinish = (values: any) => {
+    const { title, description, preview, archive } = values
+    datasetStore.addDataset(title, description, preview, archive)
+    form.resetFields()
+    notification['success']({
+      message: 'Успех',
+      description: 'Набор данных успешно добавлен'
+    })
   }
 
   return (
@@ -43,7 +58,7 @@ function AdminPanel() {
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
+        form={form}
         autoComplete="off"
       >
         <SubTitle>Название</SubTitle>
@@ -83,7 +98,7 @@ function AdminPanel() {
               Нажмите или перенесите сюда архив чтобы его загрузить
             </p>
             <p className="ant-upload-hint">
-              Поддерживается только загрузка одного файла.
+              Поддерживается загрузка только одного файла.
             </p>
           </Dragger>
         </Form.Item>

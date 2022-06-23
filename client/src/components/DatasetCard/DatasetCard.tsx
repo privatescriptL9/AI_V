@@ -14,6 +14,7 @@ import { Menu } from 'antd'
 import { toLocaleDateString } from '../../pages/Profile/Profile'
 import { Context } from '../../main'
 import { useContext, useEffect, useState } from 'react'
+import defaultPhoto from '../../assets/images/no-image.png'
 
 interface IDatasetCard {
   id: number
@@ -94,7 +95,7 @@ function DatasetCard({
 
   return (
     <Container>
-      <ImgPreview src={preview_image} alt="dataset_preview" />
+      <ImgPreview src={preview_image || defaultPhoto} alt="dataset_preview" />
       <Name>{name}</Name>
       <Dropdown overlay={menu} />
       <Size>Размер архива {size}</Size>

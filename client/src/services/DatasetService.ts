@@ -16,4 +16,18 @@ export default class DatasetService {
   static async getAllFavorites() {
     return $api.get('/dataset/favorites')
   }
+
+  static async addDataset(
+    title: string,
+    description: string,
+    preview: string,
+    archive: any
+  ) {
+    return $api.post('/dataset/add', {
+      title,
+      description,
+      preview,
+      archive
+    })
+  }
 }

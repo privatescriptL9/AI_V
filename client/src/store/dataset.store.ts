@@ -72,4 +72,25 @@ export default class DatasetStore {
       return error?.response?.data?.message
     }
   }
+
+  async addDataset(
+    title: string,
+    description: string,
+    preview: string,
+    archive: any
+  ) {
+    try {
+      this.setLoading(true)
+      const response = await DatasetService.addDataset(
+        title,
+        description,
+        preview,
+        archive
+      )
+      this.setLoading(false)
+      this.setDatasets([...this.datasets, response.data])
+    } catch (error: any) {
+      return error?.response?.data?.message
+    }
+  }
 }

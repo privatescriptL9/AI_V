@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { GetCurrentUser } from 'src/utils/decorators'
 
 import { DatasetService } from './dataset.service'
@@ -10,6 +11,17 @@ export class DatasetController {
   @Get('all')
   getAll() {
     return this.datasetService.getAll()
+  }
+
+  @Post('uploadArchive')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadArchive(@UploadedFile() file) {
+    return this.datasetService.uploadArchive(file)
+  }
+
+  @Post('add')
+  addDataset(@Body() dto) {
+    return this.datasetService.addDataset(dto)
   }
 
   @Post('add_to_favorite')

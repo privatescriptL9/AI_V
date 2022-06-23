@@ -49,6 +49,7 @@ function Profile() {
           message: 'Ошибка загрузки',
           description: 'Файл не подходящего формата'
         })
+        return false
       }
     }
   }

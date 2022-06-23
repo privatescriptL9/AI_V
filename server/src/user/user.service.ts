@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
-import * as fs from 'fs'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { YandexS3Service } from 'src/yandex-s3/yandex-s3.service'
 
 @Injectable()
 export class UserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService, private yandexS3Service: YandexS3Service) {}
 
   getAll() {
     return this.prismaService.user.findMany()
@@ -13,7 +13,7 @@ export class UserService {
 
   async changeAvatar(user: any, file: any) {
     if (!['image/jpeg', 'image/png'].includes(file.mimetype)) {
-      throw new BadRequestException('Файл не верного формата')
+      throw new BadRequestException('Файл неверного формата')
     }
 
     const currentUser = await this.prismaService.user.findUnique({
@@ -24,29 +24,23 @@ export class UserService {
     let currentAvatar
 
     if (currentUser.avatar_url) {
-      currentAvatar = currentUser.avatar_url.split('/')[3]
+      currentAvatar = currentUser.avatar_url.split('/')[4]
     }
 
-    const filename = user.sub + '_' + file.originalname
-    const path = `avatars/${filename}`
-    fs.writeFile(path, file.buffer, err => {
-      // eslint-disable-next-line no-console
-      if (err) return console.error(err)
-    })
+    await this.yandexS3Service.deleteFile(currentAvatar, 'avatars')
 
-    if (currentAvatar && currentAvatar !== filename) {
-      fs.unlink(`avatars/${currentAvatar}`, err => {
-        // eslint-disable-next-line no-console
-        if (err) return console.error(err)
-      })
-    }
+    const uploadedFile = await this.yandexS3Service.uploadFile(
+      file.buffer,
+      `${user.sub}-${file.originalname}`,
+      'avatars'
+    )
 
     await this.prismaService.user.update({
       where: {
         email: currentUser.email
       },
       data: {
-        avatar_url: `${process.env.API_URL}/${filename}`
+        avatar_url: uploadedFile.Location
       }
     })
   }

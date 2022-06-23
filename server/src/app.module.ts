@@ -2,8 +2,6 @@ import { MailerModule } from '@nestjs-modules/mailer'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
-import { ServeStaticModule } from '@nestjs/serve-static'
-import { join } from 'path'
 
 import { AuthModule } from './auth/auth.module'
 import { DatasetModule } from './dataset/dataset.module'
@@ -11,12 +9,10 @@ import { MailModule } from './mail/mail.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { UserModule } from './user/user.module'
 import { JwtAuthGuard } from './utils/guards/jwt-guard.guard'
+import { YandexS3Module } from './yandex-s3/yandex-s3.module'
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'avatars')
-    }),
     ConfigModule.forRoot(),
     AuthModule,
     PrismaModule,
@@ -33,7 +29,8 @@ import { JwtAuthGuard } from './utils/guards/jwt-guard.guard'
         }
       }
     }),
-    DatasetModule
+    DatasetModule,
+    YandexS3Module
   ],
 
   providers: [

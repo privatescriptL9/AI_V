@@ -27,7 +27,15 @@ function Settings() {
         autoComplete="off"
       >
         <SubTitle>Сменить имя пользователя</SubTitle>
-        <Form.Item name="username">
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              min: 6,
+              message: 'Минимум 6 символов'
+            }
+          ]}
+        >
           <Input />
         </Form.Item>
 

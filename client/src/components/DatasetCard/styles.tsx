@@ -31,8 +31,8 @@ export const Name = styled.div`
 
 export const Dropdown = styled(DropdownAnt.Button)`
   position: absolute;
-  right: 1rem;
-  bottom: 6rem;
+  top: 0.5rem;
+  right: 0.5rem;
 `
 
 export const Size = styled.div`
@@ -50,11 +50,11 @@ export const DetailsButton = styled.div`
   align-items: center;
   justify-content: center;
   height: 5rem;
-  margin: 5rem 0 0;
   overflow: hidden;
   border-top: 1px solid #b9b9b9;
   background-color: #fff;
   transition: background-color 0.3s ease;
+  margin: auto 0 0;
 
   &:hover {
     background-color: #e9e9e9;
