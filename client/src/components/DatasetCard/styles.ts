@@ -8,7 +8,7 @@ export const Container = styled.div`
   border: 1px solid #fff;
   background-color: #fff;
   overflow: hidden;
-  width: 100%;
+  width: 25.6rem;
   display: flex;
   flex-direction: column;
   position: relative;
