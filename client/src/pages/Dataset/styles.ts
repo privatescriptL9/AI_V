@@ -89,4 +89,12 @@ export const Property = styled.div`
 
 export const Comments = styled.div`
   min-height: 40rem;
+  margin: 0 10rem;
+  padding: 2rem;
+`
+
+export const CommentsWrapper = styled.div`
+  overflow-y: auto;
+  height: 30rem;
+  margin: 0 0 2rem;
 `

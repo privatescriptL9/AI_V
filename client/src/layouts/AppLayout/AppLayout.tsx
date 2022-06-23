@@ -61,6 +61,7 @@ function AppLayout() {
 
   const handleLogout = () => {
     store.logout()
+    navigate('/auth')
     localStorage.removeItem('token')
   }
 

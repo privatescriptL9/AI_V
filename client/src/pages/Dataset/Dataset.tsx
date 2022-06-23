@@ -18,14 +18,18 @@ import {
   Column2,
   SubTitle,
   Property,
-  Comments
+  Comments,
+  CommentsWrapper
 } from './styles'
 import defaultPhoto from '../../assets/images/no-image.png'
+import Comment from '../../components/Comment/Comment'
+import { Button, Input } from 'antd'
 
 function Dataset() {
   const params = useParams()
-  const { datasetStore } = useContext(Context)
+  const { store, datasetStore, commentStore } = useContext(Context)
   const [dataset, setDataset] = useState<any>()
+  const [value, setValue] = useState<string>('')
 
   useEffect(() => {
     const getDataset = async () => {
@@ -34,7 +38,15 @@ function Dataset() {
     }
 
     getDataset()
+    commentStore.getAll(Number(params.id))
   }, [])
+
+  const handleAddComment = () => {
+    if (value.trim()) {
+      commentStore.addComment(store.user.id, Number(params.id), value)
+      setValue('')
+    }
+  }
 
   return (
     <Container>
@@ -72,7 +84,25 @@ function Dataset() {
         </Column2>
       </Body>
       <Comments>
+        <SubTitle>Комментарии</SubTitle>
+        <CommentsWrapper>
+          {commentStore.comments.map((comment: any) => (
+            <Comment
+              userId={comment.userId}
+              text={comment.text}
+              createdAt={comment.createdAt}
+            />
+          ))}
+        </CommentsWrapper>
 
+        <Input value={value} onChange={event => setValue(event.target.value)} />
+        <Button
+          type="primary"
+          onClick={handleAddComment}
+          style={{ marginTop: 10 }}
+        >
+          Добавить комментарий
+        </Button>
       </Comments>
     </Container>
   )

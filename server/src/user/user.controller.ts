@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { User } from '@prisma/client'
 import { GetCurrentUser } from 'src/utils/decorators'
@@ -12,6 +12,11 @@ export class UserController {
   @Get('all')
   getAllUsers() {
     return this.userService.getAll()
+  }
+
+  @Get(':userId')
+  getUserById(@Param('userId') userId: number) {
+    return this.userService.getUserById(userId)
   }
 
   @Post('changeAvatar')

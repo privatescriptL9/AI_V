@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 
 import { AuthModule } from './auth/auth.module'
+import { CommentModule } from './comment/comment.module'
 import { DatasetModule } from './dataset/dataset.module'
 import { MailModule } from './mail/mail.module'
 import { PrismaModule } from './prisma/prisma.module'
@@ -30,7 +31,8 @@ import { YandexS3Module } from './yandex-s3/yandex-s3.module'
       }
     }),
     DatasetModule,
-    YandexS3Module
+    YandexS3Module,
+    CommentModule
   ],
 
   providers: [

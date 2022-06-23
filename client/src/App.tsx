@@ -15,6 +15,7 @@ import Dataset from './pages/Dataset/Dataset'
 import Settings from './pages/Settings/Settings'
 import Users from './pages/Users/Users'
 import Datasets from './pages/Datasets/Datasets'
+import Welcome from './pages/Welcome/Welcome'
 
 function App(): ReactElement | null {
   const { store } = useContext(Context)
@@ -56,8 +57,9 @@ function App(): ReactElement | null {
 
   return (
     <Routes>
-      <Route path="/auth" element={<AuthLayout />}>
-        <Route index element={<Login />} />
+      <Route path="/" element={<Welcome />} />
+      <Route path="/" element={<AuthLayout />}>
+        <Route path="auth" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route>
       <Route path="*" element={<Navigate to="/auth" replace />} />

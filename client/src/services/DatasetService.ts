@@ -36,4 +36,16 @@ export default class DatasetService {
       datasetId
     })
   }
+
+  static async getAllComments(datasetId: number) {
+    return $api.get(`/comment/all/${datasetId}`)
+  }
+
+  static async addComment(userId: number, dataId: number, text: string) {
+    return $api.post('/comment/add', {
+      userId,
+      dataId,
+      text
+    })
+  }
 }

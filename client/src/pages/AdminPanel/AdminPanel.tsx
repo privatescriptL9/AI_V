@@ -81,10 +81,7 @@ function AdminPanel() {
         </Form.Item>
 
         <SubTitle>Ссылка на фотографию</SubTitle>
-        <Form.Item
-          name="preview"
-          rules={[{ required: true, message: 'Введите ссылку на фотографию' }]}
-        >
+        <Form.Item name="preview">
           <Input />
         </Form.Item>
 

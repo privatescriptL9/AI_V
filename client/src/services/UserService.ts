@@ -7,6 +7,10 @@ export default class UserService {
     return $api.get<IUser[]>('/user/all')
   }
 
+  static async getUserById(userId: number) {
+    return $api.get(`/user/${userId}`)
+  }
+
   static async updateInfo(username: string, password: string) {
     return $api.post('/user/updateInfo', {
       username: username ? username : null,

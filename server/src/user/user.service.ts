@@ -11,6 +11,12 @@ export class UserService {
     return this.prismaService.user.findMany()
   }
 
+  getUserById(userId: number) {
+    return this.prismaService.user.findUnique({
+      where: { id: Number(userId) }
+    })
+  }
+
   async changeAvatar(user: any, file: any) {
     if (!['image/jpeg', 'image/png'].includes(file.mimetype)) {
       throw new BadRequestException('Файл неверного формата')

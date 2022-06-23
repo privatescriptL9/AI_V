@@ -97,7 +97,7 @@ export class DatasetService {
     if (!user) throw new BadRequestException('Такого пользователя не существует')
 
     if (user.favorites.includes(datasetId)) {
-      const favorites = user.favorites.filter((item: any) => item.id === datasetId)
+      const favorites = user.favorites.filter((item: any) => item !== datasetId)
       await this.prismaService.user.update({
         where: {
           id: userId
