@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   gap: 2.4rem;
   overflow-y: hidden;
-  height: 32rem;
+  min-height: 32rem;
 `
 
 export const EmptyContainer = styled.div`
