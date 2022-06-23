@@ -26,7 +26,7 @@ function AdminPanel() {
     },
     onChange(info) {
       const accessFileTypes = ['application/zip']
-
+      console.log(info)
       if (!accessFileTypes.includes(String(info.file.type))) {
         notification['error']({
           message: 'Ошибка загрузки',
